@@ -89,7 +89,7 @@
 @media (max-width: 932px) {
   .function1-options-overlay {
     position: fixed; 
-    top: 200px;
+    top: 180px;
     left: 0;
     width: 100vw;
     height: 10vh;
