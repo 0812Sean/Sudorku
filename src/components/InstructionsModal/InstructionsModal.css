@@ -12,7 +12,7 @@
   }
   
   .modal-content {
-    background-image: url('../../../public/シンプルもやもや背景2.png'); /* Set the background image */
+    background-image: url('../../../public/bj2.png'); /* Set the background image */
     background-size: cover; /* Make sure the image covers the entire modal */
     background-position: center; /* Center the image */
     padding: 20px;

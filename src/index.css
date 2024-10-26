@@ -321,7 +321,7 @@ body, .App {
 }
 
 .modal-content2 {
-  background: url('../public/猫のコメント欄5-2048x1152.png') no-repeat center center;
+  background: url('../public/2048.png') no-repeat center center;
   background-size: cover;
   padding: 80px 80px;
   border-radius: 8px;
