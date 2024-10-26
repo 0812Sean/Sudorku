@@ -190,26 +190,72 @@
 }
 
 /* Mobile responsiveness */
-@media (max-width: 768px) {
+@media (max-width: 932px) {
   .grid {
     grid-template-columns: repeat(9, 8vw); 
     grid-template-rows: repeat(9, 8vw);
+    transform: scale(0.6);
     max-width: 90vw;
+    margin-top: 130px;
   }
 
   .difficulty-button {
-    padding: 5px 10px;
+    display: flex;
+    justify-content:center;
+    top: 260px;
     font-size: 12px;
+    transform: scale(0.7);
+    gap: 1px;
   }
 
   .modal-content, .modal-content1 {
     padding: 10px;
     font-size: 14px;
   }
+  
+  .leaderboard-content {
+    display: flex;
+    position: relative;
+    overflow-y: auto;
+    scrollbar-width: none;
+    transform: scale(0.7);
+  }
+
+  .leaderboard-modal {
+    height: 200px;
+    width: 700px;
+    transform: scale(0.7);
+    margin-top: -100px;
+  }
+  .modal-content1 {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .modal-content1 .close-button {
+    top: 250px;
+    position: relative;
+    padding: 10px 20px;
+    height:40px;
+    transform: scale(0.7);
+    left: -120px;
+  }
+  .modal-content1 button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  top: 30px;
+  left: -80px;
+}
+  .modal-content1 h2 {
+  top: -30px;
+  left: 250px;
+}
+  .App{
+    gap: 0px;  
+  }
 
   .floating-image, .floating-image2 {
-    width: 20vw;
-    max-width: 80px;
+    max-width: 50px; 
   }
 }
 

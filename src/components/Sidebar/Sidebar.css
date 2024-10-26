@@ -20,3 +20,24 @@
 .function-btn:hover {
   transform: scale(1.1);
 }
+
+@media (max-width: 932px) {
+.function-btn {
+  width: 120px;
+  height: 60px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  border: none;
+  border-radius: 0;
+  transform: scale(0.7);    
+}
+.sidebar {
+  display: grid;
+  grid-template-rows: repeat(4, auto);
+  gap: 10px;
+  position: absolute;
+  top: 80px;
+  left: 150px;
+}
+}
