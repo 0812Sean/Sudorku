@@ -1,0 +1,22 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start; 
+  padding: 10px;
+}
+
+.function-btn {
+  width: 180px;
+  height: 90px;
+  margin-bottom: 60px;
+  margin-left: -100px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  border: none;
+  border-radius: 0;
+}
+
+.function-btn:hover {
+  transform: scale(1.1);
+}

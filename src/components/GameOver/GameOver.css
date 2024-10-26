@@ -1,0 +1,121 @@
+.game-over-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999; /* Ensure it appears on top */
+  }
+  
+  .modal-content {
+    background: url('../../../public/99.png') no-repeat center center; 
+    background-size: cover;
+    padding: 100px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  input#player-name {
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .submit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+  
+  .submit-button:hover {
+    background-color: #45a049;
+  }
+  @keyframes swing {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(10deg);
+  }
+  40% {
+    transform: rotate(-8deg);
+  }
+  60% {
+    transform: rotate(6deg);
+  }
+  80% {
+    transform: rotate(-4deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100vh); /* Modal falls out of the screen */
+  }
+}
+
+.swing {
+  animation: swing 0.5s ease-in-out;
+  transform-origin: top left; /* Fix the top-left corner */
+}
+
+.fall {
+  animation: fall 1s forwards;
+}
+@keyframes swing {
+    0% {
+      transform: rotate(0deg);
+    }
+    20% {
+      transform: rotate(20deg); 
+    }
+    40% {
+      transform: rotate(-16deg); 
+    }
+    60% {
+      transform: rotate(12deg); 
+    }
+    80% {
+      transform: rotate(-8deg); 
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+  
+  @keyframes fall {
+    0% {
+      transform: translateY(0) rotate(0deg); 
+    }
+    100% {
+      transform: translate(-100vw, 100vh) rotate(-45deg); 
+    }
+  }
+  
+  .swing {
+    animation: swing 2s ease-in-out; 
+    transform-origin: top left; 
+  }
+  
+  .fall {
+    animation: fall 2s forwards; 
+  }
+  
