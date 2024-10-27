@@ -44,6 +44,7 @@
   border-radius: 8px;
   cursor: pointer;
   transition: border 0.3s ease;
+  font-family: 'Comic Sans MS', cursive; 
 }
 
 .option-button.selected {
@@ -53,13 +54,13 @@
 .confirmation-buttons {
   margin-top: 20px;
   display: flex;
-  gap: 10px;
+  gap: 30px;
 }
 
 .confirm-button,
 .cancel-button {
   padding: 10px 20px;
-  background-color: #4CAF50;
+  background-color: #AEE1E1;
   color: white;
   border: none;
   border-radius: 4px;
@@ -68,9 +69,15 @@
 }
 
 .cancel-button {
-  background-color: #f44336;
+  background-color: #B0C4DE;
+}
+.confirm-button:hover {
+  background-color: #8AC7C7; 
 }
 
+.cancel-button:hover {
+  background-color: #A2B5CD; 
+}
 .background-preview {
   width: 300px;
   height: 150px;
@@ -79,6 +86,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 8px;
+
 }
 
 .preview-image {

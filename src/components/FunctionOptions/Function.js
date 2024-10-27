@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './Function.css'; 
+import React, { useState, useEffect, useRef } from 'react';
+import './Function.css';
 
 const backgroundImages = [
   null, 
@@ -20,14 +20,29 @@ const backgroundImages = [
 
 const Function1Options = ({ onConfirm, onClose }) => {
   const [selectedBackground, setSelectedBackground] = useState(null); // Stores the selected background image
+  const overlayRef = useRef(null);
 
   const handleOptionClick = (index) => {
     setSelectedBackground(backgroundImages[index]); // Sets background image on click
   };
 
+  // Close on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (overlayRef.current && !overlayRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [onClose]);
+
   return (
     <div className="function1-options-overlay">
-      <div className="function1-options">
+      <div className="function1-options" ref={overlayRef}>
         <div className="background-preview">
           {selectedBackground !== null ? (
             <img src={selectedBackground} alt="Selected Background" className="preview-image" />

@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import './InstructionsModal.css';
 
 function InstructionsModal({ onClose }) {
+  const modalRef = useRef(null);
+
+  // Close modal on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [onClose]);
+
   return (
     <div className="instructions-modal">
-      <div className="modal-content">
+      <div className="modal-content" ref={modalRef}>
         <h2>Game Instructions</h2>
         <p>
           Welcome to the world of Sudoku, where numbers live in harmony... or at least they try! 

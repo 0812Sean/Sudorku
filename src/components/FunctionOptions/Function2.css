@@ -57,8 +57,14 @@
     display: inline-block;
     width: 34px;
     height: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
-
+.switch-container {
+  display: flex;
+  align-items:center;
+  gap: 10px; 
+}
 .switch input {
     opacity: 0;
     width: 0;
@@ -90,7 +96,7 @@
 }
 
 input:checked + .slider {
-    background-color: green;
+    background-color: #AEE1E1;
 }
 
 input:checked + .slider:before {

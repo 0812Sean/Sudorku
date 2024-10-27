@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import './Function2.css'; 
+import React, { useState, useEffect, useRef } from 'react';
+import './Function2.css';
 
 const appBackgroundImages = [
     null, 
@@ -21,10 +21,10 @@ const appBackgroundImages = [
     '/b16.png',
 ];
 
-
 const Function2Options = ({ onConfirm, onClose }) => {
   const [selectedBackground, setSelectedBackground] = useState(null);
   const [isBackgroundTransparent, setIsBackgroundTransparent] = useState(true);
+  const overlayRef = useRef(null);
 
   // Toggle background color (white or transparent)
   const toggleBackground = () => {
@@ -35,12 +35,25 @@ const Function2Options = ({ onConfirm, onClose }) => {
     localStorage.setItem('cellBackgroundColor', cellBackground);
     document.documentElement.style.setProperty('--cell-background-color', cellBackground);
   };
-  
 
   // Handle background selection
   const handleOptionClick = (index) => {
     setSelectedBackground(appBackgroundImages[index]);
   };
+
+  // Close on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (overlayRef.current && !overlayRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [onClose]);
 
   // Load the initial background color state on component mount
   useEffect(() => {
@@ -48,11 +61,10 @@ const Function2Options = ({ onConfirm, onClose }) => {
     setIsBackgroundTransparent(savedBackgroundColor === 'transparent');
     document.documentElement.style.setProperty('--cell-background-color', savedBackgroundColor);
   }, []);
-  
 
   return (
     <div className="function1-options-overlay">
-      <div className="function1-options">
+      <div className="function1-options" ref={overlayRef}>
         <div className="background-preview">
           {selectedBackground !== null ? (
             <img src={selectedBackground} alt="Selected Background" className="preview-image" />

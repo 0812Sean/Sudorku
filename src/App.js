@@ -676,14 +676,12 @@ function App() {
       {showLeaderboard && (
         <LeaderboardModal leaderboard={leaderboard} onClose={handleCloseLeaderboard} />
       )}
-
       <img src="cat2.gif" alt="Floating" className="floating-image" />
       <img src="hh.gif" alt="Floating2" className="floating-image2" />
     </div>
   );
 }
 
-// Leaderboard Modal Component
 // Leaderboard Modal Component
 function LeaderboardModal({ leaderboard, onClose }) {
   const [selectedDifficulty, setSelectedDifficulty] = useState('Easy'); // Track the selected difficulty
@@ -693,8 +691,12 @@ function LeaderboardModal({ leaderboard, onClose }) {
   };
 
   return (
-    <div className="leaderboard-modal">
-      <div className="modal-content1">
+    <div 
+    className="leaderboard-backdrop" 
+    onClick={onClose} // Close the leaderboard when clicking on the backdrop
+  >
+    <div className="leaderboard-modal" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-content1" >
         <h2>Leaderboard</h2>
 
         {/* Render difficulty buttons */}
@@ -724,6 +726,7 @@ function LeaderboardModal({ leaderboard, onClose }) {
 
         <button className="close-button" onClick={onClose}>Close</button>
       </div>
+    </div>
     </div>
   );
 }
