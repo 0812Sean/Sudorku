@@ -539,7 +539,7 @@ function App() {
     const timer = setInterval(() => {
       if (!isGameOver && !isPaused && isGameStarted) {
         setTime((prevTime) => {
-          if (prevTime >= 30 * 60) {
+          if (prevTime >= 3 * 60 * 60) {
             setIsGameOver(true);
             return prevTime;
           }
