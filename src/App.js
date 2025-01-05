@@ -148,60 +148,18 @@ function App() {
     }, []);
   
     return (
-      <div
-        className="ad-modal-overlay"
-        style={{
-          position: "fixed", 
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundColor: "rgba(0, 0, 0, 0.5)", 
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          zIndex: 9999, 
-        }}
-      >
-        <div
-          className="ad-content"
-          style={{
-            backgroundColor: "#fff",
-            padding: "20px",
-            borderRadius: "10px",
-            textAlign: "center",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          <ins
-            className="adsbygoogle"
-            style={{ display: "block" }}
-            data-ad-client="ca-pub-2216607554928934" 
-            data-ad-slot="6556732735"             
-            data-ad-format="auto"
-            data-full-width-responsive="true"
-          ></ins>
-          <button
-            style={{
-              marginTop: "20px",
-              padding: "10px 20px",
-              backgroundColor: "#007BFF",
-              color: "#fff",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
-            onClick={() => {
-              document.querySelector('.ad-modal-overlay').style.display = 'none'; 
-            }}
-          >
-            Close Ad
-          </button>
-        </div>
+      <div className="ad-wrapper" style={{ textAlign: "center", margin: "20px auto" }}>
+        <ins
+          className="adsbygoogle"
+          style={{ display: "block" }}
+          data-ad-client="ca-pub-2216607554928934" 
+          data-ad-slot="6556732735"   
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        ></ins>
       </div>
     );
   };
-  
   
    
   // useEffect(() => {
