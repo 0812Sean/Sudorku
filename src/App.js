@@ -116,6 +116,9 @@ function App() {
   const [isGameStarted, setIsGameStarted] = useState(false); // New state to track if the game has started
   const [showLeaderboard, setShowLeaderboard] = useState(false); // Show leaderboard state
   const [showInstructions, setShowInstructions] = useState(false);
+  const [showAdModal, setShowAdModal] = useState(false); 
+  const [showMistakeAdModal, setShowMistakeAdModal] = useState(false);
+  const [showAdComponent, setShowAdComponent] = useState(false);
   const [leaderboard, setLeaderboard] = useState({
     Easy: [],
     Medium: [],
@@ -123,6 +126,84 @@ function App() {
     VeryHard: [],
     Extreme: [],
   });
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+    document.body.appendChild(script);
+  
+    return () => {
+      document.body.removeChild(script); 
+    };
+  }, []);
+  
+  const AdComponent = () => {
+    useEffect(() => {
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {
+        console.error("AdSense error:", e);
+      }
+    }, []);
+  
+    return (
+      <div
+        className="ad-modal-overlay"
+        style={{
+          position: "fixed", 
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundColor: "rgba(0, 0, 0, 0.5)", 
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          zIndex: 9999, 
+        }}
+      >
+        <div
+          className="ad-content"
+          style={{
+            backgroundColor: "#fff",
+            padding: "20px",
+            borderRadius: "10px",
+            textAlign: "center",
+            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <ins
+            className="adsbygoogle"
+            style={{ display: "block" }}
+            data-ad-client="ca-pub-2216607554928934" 
+            data-ad-slot="6556732735"             
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          ></ins>
+          <button
+            style={{
+              marginTop: "20px",
+              padding: "10px 20px",
+              backgroundColor: "#007BFF",
+              color: "#fff",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              document.querySelector('.ad-modal-overlay').style.display = 'none'; 
+            }}
+          >
+            Close Ad
+          </button>
+        </div>
+      </div>
+    );
+  };
+  
+  
+   
   // useEffect(() => {
     const fetchLeaderboard = async () => {
       const difficulties = ['Easy', 'Medium', 'Hard', 'Very Hard', 'Extreme'];
@@ -154,7 +235,7 @@ function App() {
   
     const savedCellBackgroundColor = localStorage.getItem('cellBackgroundColor') || 'transparent';
     console.log('Applying saved cell background color:', savedCellBackgroundColor);
-    document.documentElement.style.setProperty('--cell-background-color', savedCellBackgroundColor); // 应用保存的背景色
+    document.documentElement.style.setProperty('--cell-background-color', savedCellBackgroundColor); 
   
   }, []);
   
@@ -194,7 +275,7 @@ function App() {
   };
 
   const handleFunction2Click = () => {
-    setIsFunction2Active(!isFunction2Active); // 显示/隐藏功能二
+    setIsFunction2Active(!isFunction2Active); 
   };
 
   const handleBackgroundConfirm = (background) => {
@@ -377,9 +458,10 @@ function App() {
       const isError = number !== solution[row][col];
 
       if (isError) {
-        setMistakeCount(mistakeCount + 1);
-        if (mistakeCount + 1 >= 3) {
-          setIsGameOver(true);
+        const updatedMistakeCount = mistakeCount + 1;
+        setMistakeCount(updatedMistakeCount);
+        if (updatedMistakeCount >= 3) {
+          setShowMistakeAdModal(true); 
           return;
         }
       }
@@ -420,7 +502,6 @@ function App() {
       if (isComplete) {
         setIsSuccess(true);
         setIsGameOver(true);
-        // updateLeaderboard(time, difficulty);
       }
     }
   }, [sudoku, selectedCell, isNotesMode, eraseMode, history, solution, mistakeCount, isGameOver, isPaused]);
@@ -470,70 +551,91 @@ function App() {
     setIsSuccess(false); // Reset success state
   };
 
-  const handleHint = () => {
-    if (hintCount === 0 || isGameOver || isPaused) {
-      setShowNoHintMessage(true);
-      setTimeout(() => {
-        setShowNoHintMessage(false);
-      }, 3000);
-      return;
-    }
-  
-    let emptyCells = [];
-    for (let row = 0; row < 9; row++) {
-      for (let col = 0; col < 9; col++) {
-        if (sudoku[row][col].value === null) {
-          emptyCells.push({ row, col });
-        }
+const handleHint = () => {
+  if (hintCount === 0) {
+    setShowAdModal(true); 
+    return; 
+  }
+
+  if (isGameOver || isPaused) {
+    setShowNoHintMessage(true);
+    setTimeout(() => {
+      setShowNoHintMessage(false);
+    }, 3000);
+    return;
+  }
+
+  provideHint();
+};
+
+const handleGetHint = () => {
+  setShowAdComponent(true);
+  setTimeout(() => {
+    setHintCount((prev) => prev + 1);
+    setShowAdComponent(false);
+    setShowAdModal(false);
+    setIsPaused(false);
+  }, 5000); 
+};
+const provideHint = () => {
+  let emptyCells = [];
+  for (let row = 0; row < 9; row++) {
+    for (let col = 0; col < 9; col++) {
+      if (sudoku[row][col].value === null) {
+        emptyCells.push({ row, col });
       }
     }
-  
-    if (emptyCells.length > 0) {
-      const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-      const { row, col } = randomCell;
-      const correctValue = solution[row][col];
-  
-      const newSudoku = sudoku.map((r, rowIndex) =>
-        r.map((cell, colIndex) => (rowIndex === row && colIndex === col ? { ...cell, value: correctValue, notes: [], isEditable: false } : cell))
-      );
-  
-      setHistory([...history, sudoku]);
-      setSudoku(newSudoku);
-      setHintCount(hintCount - 1);
-      setFlashingCell(randomCell);
-  
-      const { isRowComplete, isColComplete, isBoxComplete, boxCells } = checkCompletion(newSudoku, row, col);
-      const newWaveCells = [];
-  
-      if (isRowComplete) {
-        newWaveCells.push(...newSudoku[row].map((_, colIndex) => ({ row, col: colIndex })));
-      }
-      if (isColComplete) {
-        newWaveCells.push(...newSudoku.map((_, rowIndex) => ({ row: rowIndex, col })));
-      }
-      if (isBoxComplete) {
-        newWaveCells.push(...boxCells);
-      }
-  
-      if (newWaveCells.length > 0) {
-        setWaveCells(newWaveCells);
-        setTimeout(() => setWaveCells([]), 2000);
-      }
-  
-      const isComplete = newSudoku.every(row =>
-        row.every(cell => cell.value !== null && !cell.isError)
-      );
-      if (isComplete) {
-        setIsSuccess(true);
-        setIsGameOver(true);
-        // updateLeaderboard(time, difficulty); 
-      }
-  
-      setTimeout(() => {
-        setFlashingCell(null);
-      }, 2000);
+  }
+
+  if (emptyCells.length > 0) {
+    const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+    const { row, col } = randomCell;
+    const correctValue = solution[row][col];
+
+    const newSudoku = sudoku.map((r, rowIndex) =>
+      r.map((cell, colIndex) =>
+        rowIndex === row && colIndex === col
+          ? { ...cell, value: correctValue, notes: [], isEditable: false }
+          : cell
+      )
+    );
+
+    setHistory([...history, sudoku]);
+    setSudoku(newSudoku);
+    setHintCount(hintCount - 1);
+    setFlashingCell(randomCell);
+
+    const { isRowComplete, isColComplete, isBoxComplete, boxCells } = checkCompletion(newSudoku, row, col);
+    const newWaveCells = [];
+
+    if (isRowComplete) {
+      newWaveCells.push(...newSudoku[row].map((_, colIndex) => ({ row, col: colIndex })));
     }
-  };
+    if (isColComplete) {
+      newWaveCells.push(...newSudoku.map((_, rowIndex) => ({ row: rowIndex, col })));
+    }
+    if (isBoxComplete) {
+      newWaveCells.push(...boxCells);
+    }
+
+    if (newWaveCells.length > 0) {
+      setWaveCells(newWaveCells);
+      setTimeout(() => setWaveCells([]), 2000);
+    }
+
+    const isComplete = newSudoku.every(row =>
+      row.every(cell => cell.value !== null && !cell.isError)
+    );
+    if (isComplete) {
+      setIsSuccess(true);
+      setIsGameOver(true);
+    }
+
+    setTimeout(() => {
+      setFlashingCell(null);
+    }, 2000);
+  }
+};
   
   useEffect(() => {
     const timer = setInterval(() => {
@@ -581,6 +683,83 @@ function App() {
         onFunction3={handleShowLeaderboard} // Display leaderboard on click
         onFunction4={handleFunction4Click}
       />
+
+{showMistakeAdModal && (
+  <div
+    className="ad-modal"
+    onClick={() => {
+      setShowMistakeAdModal(false); 
+      if (mistakeCount >= 3) {
+        setIsGameOver(true); 
+      }
+    }}
+  >
+    <div
+      className="ad-modal-content"
+      onClick={(e) => e.stopPropagation()} 
+    >
+      <h3>Watch this ad to reduce a mistake</h3>
+      <div className="ad-buttons">
+        <button
+          className="adbutton"
+          onClick={() => {
+            setShowMistakeAdModal(false);
+            setShowAdComponent(true); 
+            setIsPaused(true);
+            setTimeout(() => {
+              setMistakeCount((prev) => Math.max(0, prev - 1)); 
+              setShowAdComponent(false); 
+              setShowMistakeAdModal(false);
+              setIsPaused(false);  
+            }, 5000);
+          }}
+        >
+          Reduce Mistake
+        </button>
+        <button
+          className="adbutton"
+          onClick={() => {
+            setShowMistakeAdModal(false);
+            if (mistakeCount >= 3) {
+              setIsGameOver(true);
+            }
+          }}
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+{showAdModal && (
+        <div className="ad-modal" onClick={() => setShowAdModal(false)}>
+          <div
+            className="ad-modal-content"
+            onClick={(e) => e.stopPropagation()} 
+          >
+            <h3>Watch this ad to gain an extra hint</h3>
+            <div className="ad-buttons">
+              <button className="adbutton" 
+          onClick={() => {
+            setShowAdModal(false); 
+            handleGetHint();
+            setIsPaused(true);
+          }}>
+                Get Hint
+              </button>
+              <button
+                className="adbutton"
+                onClick={() => setShowAdModal(false)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showAdComponent && <AdComponent />}
+
       {showInstructions && (
         <InstructionsModal onClose={handleCloseInstructions} />
       )}

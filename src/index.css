@@ -394,3 +394,74 @@ body, .App {
   justify-content: center;
   z-index: 10;
 }
+.ad-wrapper {
+  position: fixed; /* 固定在视窗中央 */
+  /* top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  z-index: 1000; 
+  background: url('../public/99.png') no-repeat center center; 
+  background-size: cover; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  border-radius: 8px;
+  text-align: center; 
+  height: 120px; */
+}
+
+.adsbygoogle {
+  margin: 0 auto; /* 确保广告内容水平居中 */
+}
+
+.adbutton{
+    margin: 8px;
+    padding: 8px 12px;
+    background-color: #AEE1E1;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Comic Sans MS', cursive;
+}
+
+.ad-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.ad-modal-content {
+  background: url('../public/99.png') no-repeat center center; /* 添加背景图片 */
+  background-size: cover; /* 让图片充满容器 */  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* .ad-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.adbutton,
+.close-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.adbutton:hover,
+.close-button:hover {
+  background-color: #0056b3;
+} */
