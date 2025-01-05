@@ -130,7 +130,7 @@ function App() {
   useEffect(() => {
     const script = document.createElement('script');
     script.async = true;
-    script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+    script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2216607554928934';
     document.body.appendChild(script);
   
     return () => {
@@ -148,10 +148,23 @@ function App() {
     }, []);
   
     return (
-      <div className="ad-wrapper" style={{ textAlign: "center", margin: "20px auto" }}>
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          zIndex: 9999,
+          pointerEvents: "none",
+        }}
+      >
         <ins
           className="adsbygoogle"
-          style={{ display: "block" }}
+          style={{ display: "block", pointerEvents: "auto" }}
           data-ad-client="ca-pub-2216607554928934" 
           data-ad-slot="6556732735"   
           data-ad-format="auto"
@@ -160,7 +173,6 @@ function App() {
       </div>
     );
   };
-  
    
   // useEffect(() => {
     const fetchLeaderboard = async () => {
