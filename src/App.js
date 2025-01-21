@@ -169,7 +169,7 @@ function App() {
       >
         {/* 如果用户禁用 JS，显示备用广告 */}
         <noscript>
-          <a href="https://yllix.com/publishers/167683" target="_blank">
+          <a href="https://yllix.com/publishers/167683" rel="noopener noreferrer" target="_blank">
             <img
               src="//ylx-aff.advertica-cdn.com/pub/300x250.png"
               style={{ border: "none", margin: 0, padding: 0, verticalAlign: "baseline" }}
