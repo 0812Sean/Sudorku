@@ -140,11 +140,16 @@ function App() {
   
   const AdComponent = () => {
     useEffect(() => {
-      try {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      } catch (e) {
-        console.error("AdSense error:", e);
-      }
+      // 动态加载 ylliX 广告脚本
+      const script = document.createElement("script");
+      script.src = "https://udbaa.com/bnr.php?section=General&pub=167683&format=300x250&ga=g"; // ylliX 脚本路径
+      script.type = "text/javascript";
+      script.async = true;
+      document.body.appendChild(script);
+  
+      return () => {
+        document.body.removeChild(script);
+      };
     }, []);
   
     return (
@@ -162,17 +167,19 @@ function App() {
           pointerEvents: "none",
         }}
       >
-        <ins
-          className="adsbygoogle"
-          style={{ display: "block", pointerEvents: "auto" }}
-          data-ad-client="ca-pub-2216607554928934" 
-          data-ad-slot="6556732735"   
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        ></ins>
+        {/* 如果用户禁用 JS，显示备用广告 */}
+        <noscript>
+          <a href="https://yllix.com/publishers/167683" target="_blank">
+            <img
+              src="//ylx-aff.advertica-cdn.com/pub/300x250.png"
+              style={{ border: "none", margin: 0, padding: 0, verticalAlign: "baseline" }}
+              alt="ylliX – Online Advertising Network"
+            />
+          </a>
+        </noscript>
       </div>
     );
-  };
+  };  
    
   // useEffect(() => {
     const fetchLeaderboard = async () => {
